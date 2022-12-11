@@ -31,7 +31,7 @@ function getFinals(array) {
     const allFinals = array.filter(state => state.Stage === 'Final')
         return allFinals;
  }
-console.log(getFinals(fifaData));
+console.log('Task 2:', getFinals(fifaData));
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 3: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -44,7 +44,7 @@ function getYears(array, cb) {
     const years = cb(array).map(state => state.Year)
         return years;
 }
-console.log(getYears(fifaData, getFinals));
+console.log('Task 3:', getYears(fifaData, getFinals));
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 4: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -58,7 +58,7 @@ Use the higher-order function getWinners to do the following:
 function getWinners(array, cb) {
     return cb(array).map(state => state['Home Team Goals'] > state['Away Team Goals'] ? state['Home Team Name'] : state['Away Team Name']);
 }
-console.log(getWinners(fifaData, getFinals));
+console.log('Task 4:', getWinners(fifaData, getFinals));
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
@@ -72,10 +72,12 @@ Use the higher-order function getWinnersByYear to do the following:
 💡 HINT: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
+function getWinnersByYear(array, cb1, cb2, cb3) {
+    const winners = cb3(array, cb1);
+    const years = cb2(array, cb1);
+    return winners.map((state, index) => `In ${years[index]}, ${state} won the world cup!`)
 }
-
+console.log('Task 5:', getWinnersByYear(fifaData, getFinals, getYears, getWinners));
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -92,10 +94,13 @@ Use the higher order function `getAverageGoals` to do the following:
  
 */
 
-function getAverageGoals(/* code here */) {
-    /* code here */
+function getAverageGoals(cb) {
+    const averageHomeGoals = cb.reduce(function(acc, state){
+        return acc + state['Home Team Goals'] + state['Away Team Goals'];
+    }, 0)
+    return(averageHomeGoals / cb.length).toFixed(2);
  }
-
+console.log('Task 6:', getAverageGoals(getFinals(fifaData)));
 
 
 
